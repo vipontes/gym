@@ -1,10 +1,11 @@
+import 'package:gym/database/training_dao.dart';
 import 'package:moor/moor.dart';
 import 'package:moor_flutter/moor_flutter.dart';
-import 'package:gym/database/usuario_dao.dart';
+import 'package:gym/database/user_dao.dart';
 
 part 'moor_database.g.dart';
 
-@UseMoor(tables: [UsuarioLocals], daos: [UsuarioLocalDao])
+@UseMoor(tables: [Users, Trainings], daos: [UserDao, TrainingDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase()
       : super((FlutterQueryExecutor.inDatabaseFolder(
