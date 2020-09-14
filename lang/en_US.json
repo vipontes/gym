@@ -1,3 +1,4 @@
 {
-  "api_error": "Error getting data from server"
+  "api_error": "Error getting data from server",
+  "home": "Home"
 }
