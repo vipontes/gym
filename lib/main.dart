@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
 import 'package:gym/database/moor_database.dart';
 import 'package:gym/res/app_colors.dart';
 import 'package:gym/routes/routes.dart';
 import 'package:gym/util/localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
-
-void main() => runApp(SabClienteApp());
 
 Map<int, Color> color = {
   50: AppColors.primary,
@@ -25,7 +24,29 @@ Map<int, Color> color = {
 
 MaterialColor colorCustom = MaterialColor(0xFF00284F, color);
 
-class SabClienteApp extends StatelessWidget {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  bool _isLoggedIn = false;
+
+  var prefs = await SharedPreferences.getInstance();
+  _isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+  runApp(GymApp(
+    isLoggedIn: _isLoggedIn,
+  ));
+}
+
+class GymApp extends StatefulWidget {
+  final bool isLoggedIn;
+
+  const GymApp({Key key, this.isLoggedIn}) : super(key: key);
+
+  @override
+  _GymAppState createState() => _GymAppState();
+}
+
+class _GymAppState extends State<GymApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -64,7 +85,7 @@ class SabClienteApp extends StatelessWidget {
           }
           return supportedLocales.first;
         },
-        initialRoute: Routes.splashScreen,
+        initialRoute: widget.isLoggedIn ? Routes.home : Routes.login,
         onGenerateRoute: Routes.generateRoute,
         navigatorKey: navigatorKey,
       ),

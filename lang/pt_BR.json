@@ -1,4 +1,8 @@
 {
   "api_error": "Erro ao extrair dados do servidor",
-  "home": "Home"
+  "home": "Home",
+  "email": "Email",
+  "password": "Senha",
+  "login": "Login",
+  "forgot_password": "Esqueceu sua senha?"
 }

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:gym/transitions/fade_route.dart';
-import 'package:gym/transitions/rotation_route.dart';
-import 'package:gym/transitions/scale_route.dart';
 import 'package:gym/view/home/home_page.dart';
-import 'package:gym/view/splash_screen/splash_screen_page.dart';
+import 'package:gym/view/login/login_page.dart';
 
 class Routes {
-  static const String splashScreen = '/splash';
   static const String home = '/home';
+  static const String login = '/login';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
 
     switch (settings.name) {
-      case splashScreen:
-        return ScaleRoute(page: SplashScreenPage());
       case home:
         return FadeRoute(page: HomePage());
+      case login:
+        return MaterialPageRoute(
+          builder: (_) => LoginPage(),
+        );
     }
   }
 
@@ -43,11 +43,9 @@ class Routes {
     );
   }
 
-  static void pushRemoveStack(BuildContext context, String route,
-      {Object data}) {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-        _createRouteSettings(route).name, (Route<dynamic> route) => false,
-        arguments: data);
+  static void pushRemoveStack(BuildContext context, String route, {Object data}) {
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(_createRouteSettings(route).name, (Route<dynamic> route) => false, arguments: data);
   }
 
   static void replace(BuildContext context, String route) {

@@ -10,5 +10,7 @@ class AppColors {
   static const Color black = const Color(0xFF2d2d2d);
   static const Color blue = const Color(0xFF5770B6);
   static const Color yellow = const Color(0xFFC29344);
+
+  static Color shadow = Color(0xFF00284F).withOpacity(0.2);
 }
 // https://convertingcolors.com/

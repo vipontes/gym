@@ -1,4 +1,8 @@
 {
   "api_error": "Error getting data from server",
-  "home": "Home"
+  "home": "Home",
+  "email": "Email",
+  "password": "Password",
+  "login": "Login",
+  "forgot_password": "Forgot Password?"
 }
