@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:gym/enums/view_state.dart';
 
-import 'package:gym/database//app_database.dart';
+import 'package:gym/database/app_database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginViewModel extends ChangeNotifier {
