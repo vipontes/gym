@@ -6,8 +6,11 @@ import 'package:dio/dio.dart';
 import 'package:gym/api/error_handler/error_handler.dart';
 import 'package:gym/api/interceptor/app_interceptors.dart';
 import 'package:gym/api/interfaces/i_login_service.dart';
+import 'package:gym/gym_app.dart';
 import 'package:gym/model/token.dart';
-
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:gym/database/app_database.dart';
 import '../util/constants.dart';
 
 class LoginService implements ILoginService {
@@ -37,20 +40,32 @@ class LoginService implements ILoginService {
   }
 
   @override
-  Future<Either<ErrorHandler, Token>> login(String userEmail, String userPassword) async {
+  Future<Either<ErrorHandler, Token>> login(
+      String userEmail, String userPassword) async {
     try {
-      Response response = await dio.post("/login", data: {'user_email': userEmail, 'user_password': userPassword});
+      Response response = await dio.post("/login",
+          data: {'user_email': userEmail, 'user_password': userPassword});
 
       if (response.statusCode == 200) {
         Token tokens = Token.fromJson(response.data);
         return Right(tokens);
       } else {
-        final Map<String, dynamic> decodedMessage = json.decode(response.toString());
+        final Map<String, dynamic> decodedMessage =
+            json.decode(response.toString());
 
         return Left(ErrorHandler(response.statusCode, decodedMessage['msg']));
       }
     } on DioError catch (error) {
       return Left(ErrorHandler(500, error.message));
     }
+  }
+
+  @override
+  Future<void> logout() async {
+    final database = Provider.of<AppDatabase>(navigatorKey.currentContext);
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove(Constants.isLoggedIn);
+    return null;
   }
 }

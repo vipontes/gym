@@ -1,11 +1,11 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'training_dao.dart';
+part of 'training_local_dao.dart';
 
 // **************************************************************************
 // DaoGenerator
 // **************************************************************************
 
-mixin _$TrainingDaoMixin on DatabaseAccessor<AppDatabase> {
-  $TrainingsTable get trainings => db.trainings;
+mixin _$TrainingLocalDaoMixin on DatabaseAccessor<AppDatabase> {
+  $TrainingLocalsTable get trainingLocals => db.trainingLocals;
 }

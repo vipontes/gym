@@ -1,3 +1,6 @@
+import 'package:gym/database/app_database.dart';
+import 'package:gym/database/token_local_dao.dart';
+
 class Token {
   String token;
   String refreshToken;
@@ -13,6 +16,12 @@ class Token {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['token'] = this.token;
     data['refresh_token'] = this.refreshToken;
+    return data;
+  }
+
+  TokenLocal toMoor() {
+    final TokenLocal data =
+        new TokenLocal(token: this.token, refresh_token: this.refreshToken);
     return data;
   }
 }

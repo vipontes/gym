@@ -1,11 +1,11 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_dao.dart';
+part of 'token_local_dao.dart';
 
 // **************************************************************************
 // DaoGenerator
 // **************************************************************************
 
-mixin _$UserDaoMixin on DatabaseAccessor<AppDatabase> {
-  $UsersTable get users => db.users;
+mixin _$TokenLocalDaoMixin on DatabaseAccessor<AppDatabase> {
+  $TokenLocalsTable get tokenLocals => db.tokenLocals;
 }

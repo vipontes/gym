@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gym/transitions/fade_route.dart';
+import 'package:gym/animations//fade_route.dart';
 import 'package:gym/view/home/home_page.dart';
 import 'package:gym/view/login/login_page.dart';
 
@@ -43,9 +43,11 @@ class Routes {
     );
   }
 
-  static void pushRemoveStack(BuildContext context, String route, {Object data}) {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(_createRouteSettings(route).name, (Route<dynamic> route) => false, arguments: data);
+  static void pushRemoveStack(BuildContext context, String route,
+      {Object data}) {
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        _createRouteSettings(route).name, (Route<dynamic> route) => false,
+        arguments: data);
   }
 
   static void replace(BuildContext context, String route) {

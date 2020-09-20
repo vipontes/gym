@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:gym/database/moor_database.dart';
+import 'package:gym/database/app_database.dart';
 import 'package:gym/res/app_colors.dart';
 import 'package:gym/routes/routes.dart';
 import 'package:gym/util/localizations.dart';
@@ -22,7 +22,10 @@ class _GymAppState extends State<GymApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(builder: (context) => AppDatabase()),
+        Provider<AppDatabase>(
+          dispose: (context, db) => db.close(),
+          create: (BuildContext context) => AppDatabase(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

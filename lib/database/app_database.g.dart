@@ -1,13 +1,187 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'moor_database.dart';
+part of 'app_database.dart';
 
 // **************************************************************************
 // MoorGenerator
 // **************************************************************************
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
-class User extends DataClass implements Insertable<User> {
+class TokenLocal extends DataClass implements Insertable<TokenLocal> {
+  final String token;
+  final String refresh_token;
+  TokenLocal({@required this.token, @required this.refresh_token});
+  factory TokenLocal.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final stringType = db.typeSystem.forDartType<String>();
+    return TokenLocal(
+      token:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}token']),
+      refresh_token: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}refresh_token']),
+    );
+  }
+  factory TokenLocal.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return TokenLocal(
+      token: serializer.fromJson<String>(json['token']),
+      refresh_token: serializer.fromJson<String>(json['refresh_token']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'token': serializer.toJson<String>(token),
+      'refresh_token': serializer.toJson<String>(refresh_token),
+    };
+  }
+
+  @override
+  TokenLocalsCompanion createCompanion(bool nullToAbsent) {
+    return TokenLocalsCompanion(
+      token:
+          token == null && nullToAbsent ? const Value.absent() : Value(token),
+      refresh_token: refresh_token == null && nullToAbsent
+          ? const Value.absent()
+          : Value(refresh_token),
+    );
+  }
+
+  TokenLocal copyWith({String token, String refresh_token}) => TokenLocal(
+        token: token ?? this.token,
+        refresh_token: refresh_token ?? this.refresh_token,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('TokenLocal(')
+          ..write('token: $token, ')
+          ..write('refresh_token: $refresh_token')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(token.hashCode, refresh_token.hashCode));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is TokenLocal &&
+          other.token == this.token &&
+          other.refresh_token == this.refresh_token);
+}
+
+class TokenLocalsCompanion extends UpdateCompanion<TokenLocal> {
+  final Value<String> token;
+  final Value<String> refresh_token;
+  const TokenLocalsCompanion({
+    this.token = const Value.absent(),
+    this.refresh_token = const Value.absent(),
+  });
+  TokenLocalsCompanion.insert({
+    @required String token,
+    @required String refresh_token,
+  })  : token = Value(token),
+        refresh_token = Value(refresh_token);
+  TokenLocalsCompanion copyWith(
+      {Value<String> token, Value<String> refresh_token}) {
+    return TokenLocalsCompanion(
+      token: token ?? this.token,
+      refresh_token: refresh_token ?? this.refresh_token,
+    );
+  }
+}
+
+class $TokenLocalsTable extends TokenLocals
+    with TableInfo<$TokenLocalsTable, TokenLocal> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $TokenLocalsTable(this._db, [this._alias]);
+  final VerificationMeta _tokenMeta = const VerificationMeta('token');
+  GeneratedTextColumn _token;
+  @override
+  GeneratedTextColumn get token => _token ??= _constructToken();
+  GeneratedTextColumn _constructToken() {
+    return GeneratedTextColumn(
+      'token',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _refresh_tokenMeta =
+      const VerificationMeta('refresh_token');
+  GeneratedTextColumn _refresh_token;
+  @override
+  GeneratedTextColumn get refresh_token =>
+      _refresh_token ??= _constructRefreshToken();
+  GeneratedTextColumn _constructRefreshToken() {
+    return GeneratedTextColumn(
+      'refresh_token',
+      $tableName,
+      false,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [token, refresh_token];
+  @override
+  $TokenLocalsTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'token_locals';
+  @override
+  final String actualTableName = 'token_locals';
+  @override
+  VerificationContext validateIntegrity(TokenLocalsCompanion d,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    if (d.token.present) {
+      context.handle(
+          _tokenMeta, token.isAcceptableValue(d.token.value, _tokenMeta));
+    } else if (isInserting) {
+      context.missing(_tokenMeta);
+    }
+    if (d.refresh_token.present) {
+      context.handle(
+          _refresh_tokenMeta,
+          refresh_token.isAcceptableValue(
+              d.refresh_token.value, _refresh_tokenMeta));
+    } else if (isInserting) {
+      context.missing(_refresh_tokenMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {token};
+  @override
+  TokenLocal map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return TokenLocal.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  Map<String, Variable> entityToSql(TokenLocalsCompanion d) {
+    final map = <String, Variable>{};
+    if (d.token.present) {
+      map['token'] = Variable<String, StringType>(d.token.value);
+    }
+    if (d.refresh_token.present) {
+      map['refresh_token'] =
+          Variable<String, StringType>(d.refresh_token.value);
+    }
+    return map;
+  }
+
+  @override
+  $TokenLocalsTable createAlias(String alias) {
+    return $TokenLocalsTable(_db, alias);
+  }
+}
+
+class UserLocal extends DataClass implements Insertable<UserLocal> {
   final int user_id;
   final String user_name;
   final String user_email;
@@ -15,7 +189,7 @@ class User extends DataClass implements Insertable<User> {
   final int user_active;
   final String token;
   final String refresh_token;
-  User(
+  UserLocal(
       {@required this.user_id,
       @required this.user_name,
       @required this.user_email,
@@ -23,12 +197,12 @@ class User extends DataClass implements Insertable<User> {
       @required this.user_active,
       @required this.token,
       @required this.refresh_token});
-  factory User.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+  factory UserLocal.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
-    return User(
+    return UserLocal(
       user_id:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}user_id']),
       user_name: stringType
@@ -45,10 +219,10 @@ class User extends DataClass implements Insertable<User> {
           .mapFromDatabaseResponse(data['${effectivePrefix}refresh_token']),
     );
   }
-  factory User.fromJson(Map<String, dynamic> json,
+  factory UserLocal.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return User(
+    return UserLocal(
       user_id: serializer.fromJson<int>(json['user_id']),
       user_name: serializer.fromJson<String>(json['user_name']),
       user_email: serializer.fromJson<String>(json['user_email']),
@@ -73,8 +247,8 @@ class User extends DataClass implements Insertable<User> {
   }
 
   @override
-  UsersCompanion createCompanion(bool nullToAbsent) {
-    return UsersCompanion(
+  UserLocalsCompanion createCompanion(bool nullToAbsent) {
+    return UserLocalsCompanion(
       user_id: user_id == null && nullToAbsent
           ? const Value.absent()
           : Value(user_id),
@@ -98,7 +272,7 @@ class User extends DataClass implements Insertable<User> {
     );
   }
 
-  User copyWith(
+  UserLocal copyWith(
           {int user_id,
           String user_name,
           String user_email,
@@ -106,7 +280,7 @@ class User extends DataClass implements Insertable<User> {
           int user_active,
           String token,
           String refresh_token}) =>
-      User(
+      UserLocal(
         user_id: user_id ?? this.user_id,
         user_name: user_name ?? this.user_name,
         user_email: user_email ?? this.user_email,
@@ -117,7 +291,7 @@ class User extends DataClass implements Insertable<User> {
       );
   @override
   String toString() {
-    return (StringBuffer('User(')
+    return (StringBuffer('UserLocal(')
           ..write('user_id: $user_id, ')
           ..write('user_name: $user_name, ')
           ..write('user_email: $user_email, ')
@@ -143,7 +317,7 @@ class User extends DataClass implements Insertable<User> {
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is User &&
+      (other is UserLocal &&
           other.user_id == this.user_id &&
           other.user_name == this.user_name &&
           other.user_email == this.user_email &&
@@ -153,7 +327,7 @@ class User extends DataClass implements Insertable<User> {
           other.refresh_token == this.refresh_token);
 }
 
-class UsersCompanion extends UpdateCompanion<User> {
+class UserLocalsCompanion extends UpdateCompanion<UserLocal> {
   final Value<int> user_id;
   final Value<String> user_name;
   final Value<String> user_email;
@@ -161,7 +335,7 @@ class UsersCompanion extends UpdateCompanion<User> {
   final Value<int> user_active;
   final Value<String> token;
   final Value<String> refresh_token;
-  const UsersCompanion({
+  const UserLocalsCompanion({
     this.user_id = const Value.absent(),
     this.user_name = const Value.absent(),
     this.user_email = const Value.absent(),
@@ -170,7 +344,7 @@ class UsersCompanion extends UpdateCompanion<User> {
     this.token = const Value.absent(),
     this.refresh_token = const Value.absent(),
   });
-  UsersCompanion.insert({
+  UserLocalsCompanion.insert({
     @required int user_id,
     @required String user_name,
     @required String user_email,
@@ -185,7 +359,7 @@ class UsersCompanion extends UpdateCompanion<User> {
         user_active = Value(user_active),
         token = Value(token),
         refresh_token = Value(refresh_token);
-  UsersCompanion copyWith(
+  UserLocalsCompanion copyWith(
       {Value<int> user_id,
       Value<String> user_name,
       Value<String> user_email,
@@ -193,7 +367,7 @@ class UsersCompanion extends UpdateCompanion<User> {
       Value<int> user_active,
       Value<String> token,
       Value<String> refresh_token}) {
-    return UsersCompanion(
+    return UserLocalsCompanion(
       user_id: user_id ?? this.user_id,
       user_name: user_name ?? this.user_name,
       user_email: user_email ?? this.user_email,
@@ -205,10 +379,11 @@ class UsersCompanion extends UpdateCompanion<User> {
   }
 }
 
-class $UsersTable extends Users with TableInfo<$UsersTable, User> {
+class $UserLocalsTable extends UserLocals
+    with TableInfo<$UserLocalsTable, UserLocal> {
   final GeneratedDatabase _db;
   final String _alias;
-  $UsersTable(this._db, [this._alias]);
+  $UserLocalsTable(this._db, [this._alias]);
   final VerificationMeta _user_idMeta = const VerificationMeta('user_id');
   GeneratedIntColumn _user_id;
   @override
@@ -309,13 +484,13 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
         refresh_token
       ];
   @override
-  $UsersTable get asDslTable => this;
+  $UserLocalsTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'users';
+  String get $tableName => _alias ?? 'user_locals';
   @override
-  final String actualTableName = 'users';
+  final String actualTableName = 'user_locals';
   @override
-  VerificationContext validateIntegrity(UsersCompanion d,
+  VerificationContext validateIntegrity(UserLocalsCompanion d,
       {bool isInserting = false}) {
     final context = VerificationContext();
     if (d.user_id.present) {
@@ -370,13 +545,13 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   @override
   Set<GeneratedColumn> get $primaryKey => {user_id};
   @override
-  User map(Map<String, dynamic> data, {String tablePrefix}) {
+  UserLocal map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return User.fromData(data, _db, prefix: effectivePrefix);
+    return UserLocal.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  Map<String, Variable> entityToSql(UsersCompanion d) {
+  Map<String, Variable> entityToSql(UserLocalsCompanion d) {
     final map = <String, Variable>{};
     if (d.user_id.present) {
       map['user_id'] = Variable<int, IntType>(d.user_id.value);
@@ -405,26 +580,27 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   }
 
   @override
-  $UsersTable createAlias(String alias) {
-    return $UsersTable(_db, alias);
+  $UserLocalsTable createAlias(String alias) {
+    return $UserLocalsTable(_db, alias);
   }
 }
 
-class Training extends DataClass implements Insertable<Training> {
+class TrainingLocal extends DataClass implements Insertable<TrainingLocal> {
   final int training_id;
   final String training_name;
   final DateTime training_date;
-  Training(
+  TrainingLocal(
       {@required this.training_id,
       @required this.training_name,
       @required this.training_date});
-  factory Training.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+  factory TrainingLocal.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
     final dateTimeType = db.typeSystem.forDartType<DateTime>();
-    return Training(
+    return TrainingLocal(
       training_id: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}training_id']),
       training_name: stringType
@@ -433,10 +609,10 @@ class Training extends DataClass implements Insertable<Training> {
           .mapFromDatabaseResponse(data['${effectivePrefix}training_date']),
     );
   }
-  factory Training.fromJson(Map<String, dynamic> json,
+  factory TrainingLocal.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return Training(
+    return TrainingLocal(
       training_id: serializer.fromJson<int>(json['training_id']),
       training_name: serializer.fromJson<String>(json['training_name']),
       training_date: serializer.fromJson<DateTime>(json['training_date']),
@@ -453,8 +629,8 @@ class Training extends DataClass implements Insertable<Training> {
   }
 
   @override
-  TrainingsCompanion createCompanion(bool nullToAbsent) {
-    return TrainingsCompanion(
+  TrainingLocalsCompanion createCompanion(bool nullToAbsent) {
+    return TrainingLocalsCompanion(
       training_id: training_id == null && nullToAbsent
           ? const Value.absent()
           : Value(training_id),
@@ -467,16 +643,16 @@ class Training extends DataClass implements Insertable<Training> {
     );
   }
 
-  Training copyWith(
+  TrainingLocal copyWith(
           {int training_id, String training_name, DateTime training_date}) =>
-      Training(
+      TrainingLocal(
         training_id: training_id ?? this.training_id,
         training_name: training_name ?? this.training_name,
         training_date: training_date ?? this.training_date,
       );
   @override
   String toString() {
-    return (StringBuffer('Training(')
+    return (StringBuffer('TrainingLocal(')
           ..write('training_id: $training_id, ')
           ..write('training_name: $training_name, ')
           ..write('training_date: $training_date')
@@ -490,33 +666,33 @@ class Training extends DataClass implements Insertable<Training> {
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is Training &&
+      (other is TrainingLocal &&
           other.training_id == this.training_id &&
           other.training_name == this.training_name &&
           other.training_date == this.training_date);
 }
 
-class TrainingsCompanion extends UpdateCompanion<Training> {
+class TrainingLocalsCompanion extends UpdateCompanion<TrainingLocal> {
   final Value<int> training_id;
   final Value<String> training_name;
   final Value<DateTime> training_date;
-  const TrainingsCompanion({
+  const TrainingLocalsCompanion({
     this.training_id = const Value.absent(),
     this.training_name = const Value.absent(),
     this.training_date = const Value.absent(),
   });
-  TrainingsCompanion.insert({
+  TrainingLocalsCompanion.insert({
     @required int training_id,
     @required String training_name,
     @required DateTime training_date,
   })  : training_id = Value(training_id),
         training_name = Value(training_name),
         training_date = Value(training_date);
-  TrainingsCompanion copyWith(
+  TrainingLocalsCompanion copyWith(
       {Value<int> training_id,
       Value<String> training_name,
       Value<DateTime> training_date}) {
-    return TrainingsCompanion(
+    return TrainingLocalsCompanion(
       training_id: training_id ?? this.training_id,
       training_name: training_name ?? this.training_name,
       training_date: training_date ?? this.training_date,
@@ -524,11 +700,11 @@ class TrainingsCompanion extends UpdateCompanion<Training> {
   }
 }
 
-class $TrainingsTable extends Trainings
-    with TableInfo<$TrainingsTable, Training> {
+class $TrainingLocalsTable extends TrainingLocals
+    with TableInfo<$TrainingLocalsTable, TrainingLocal> {
   final GeneratedDatabase _db;
   final String _alias;
-  $TrainingsTable(this._db, [this._alias]);
+  $TrainingLocalsTable(this._db, [this._alias]);
   final VerificationMeta _training_idMeta =
       const VerificationMeta('training_id');
   GeneratedIntColumn _training_id;
@@ -574,13 +750,13 @@ class $TrainingsTable extends Trainings
   List<GeneratedColumn> get $columns =>
       [training_id, training_name, training_date];
   @override
-  $TrainingsTable get asDslTable => this;
+  $TrainingLocalsTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'trainings';
+  String get $tableName => _alias ?? 'training_locals';
   @override
-  final String actualTableName = 'trainings';
+  final String actualTableName = 'training_locals';
   @override
-  VerificationContext validateIntegrity(TrainingsCompanion d,
+  VerificationContext validateIntegrity(TrainingLocalsCompanion d,
       {bool isInserting = false}) {
     final context = VerificationContext();
     if (d.training_id.present) {
@@ -611,13 +787,13 @@ class $TrainingsTable extends Trainings
   @override
   Set<GeneratedColumn> get $primaryKey => {training_id};
   @override
-  Training map(Map<String, dynamic> data, {String tablePrefix}) {
+  TrainingLocal map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Training.fromData(data, _db, prefix: effectivePrefix);
+    return TrainingLocal.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  Map<String, Variable> entityToSql(TrainingsCompanion d) {
+  Map<String, Variable> entityToSql(TrainingLocalsCompanion d) {
     final map = <String, Variable>{};
     if (d.training_id.present) {
       map['training_id'] = Variable<int, IntType>(d.training_id.value);
@@ -634,24 +810,32 @@ class $TrainingsTable extends Trainings
   }
 
   @override
-  $TrainingsTable createAlias(String alias) {
-    return $TrainingsTable(_db, alias);
+  $TrainingLocalsTable createAlias(String alias) {
+    return $TrainingLocalsTable(_db, alias);
   }
 }
 
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  $UsersTable _users;
-  $UsersTable get users => _users ??= $UsersTable(this);
-  $TrainingsTable _trainings;
-  $TrainingsTable get trainings => _trainings ??= $TrainingsTable(this);
-  UserDao _userDao;
-  UserDao get userDao => _userDao ??= UserDao(this as AppDatabase);
-  TrainingDao _trainingDao;
-  TrainingDao get trainingDao =>
-      _trainingDao ??= TrainingDao(this as AppDatabase);
+  $TokenLocalsTable _tokenLocals;
+  $TokenLocalsTable get tokenLocals => _tokenLocals ??= $TokenLocalsTable(this);
+  $UserLocalsTable _userLocals;
+  $UserLocalsTable get userLocals => _userLocals ??= $UserLocalsTable(this);
+  $TrainingLocalsTable _trainingLocals;
+  $TrainingLocalsTable get trainingLocals =>
+      _trainingLocals ??= $TrainingLocalsTable(this);
+  TokenLocalDao _tokenLocalDao;
+  TokenLocalDao get tokenLocalDao =>
+      _tokenLocalDao ??= TokenLocalDao(this as AppDatabase);
+  UserLocalDao _userLocalDao;
+  UserLocalDao get userLocalDao =>
+      _userLocalDao ??= UserLocalDao(this as AppDatabase);
+  TrainingLocalDao _trainingLocalDao;
+  TrainingLocalDao get trainingLocalDao =>
+      _trainingLocalDao ??= TrainingLocalDao(this as AppDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [users, trainings];
+  List<DatabaseSchemaEntity> get allSchemaEntities =>
+      [tokenLocals, userLocals, trainingLocals];
 }
