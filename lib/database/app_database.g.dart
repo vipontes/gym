@@ -587,26 +587,30 @@ class $UserLocalsTable extends UserLocals
 
 class TrainingLocal extends DataClass implements Insertable<TrainingLocal> {
   final int training_id;
-  final String training_name;
+  final int user_id;
   final DateTime training_date;
+  final String training_description;
   TrainingLocal(
       {@required this.training_id,
-      @required this.training_name,
-      @required this.training_date});
+      @required this.user_id,
+      @required this.training_date,
+      @required this.training_description});
   factory TrainingLocal.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
     final dateTimeType = db.typeSystem.forDartType<DateTime>();
+    final stringType = db.typeSystem.forDartType<String>();
     return TrainingLocal(
       training_id: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}training_id']),
-      training_name: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}training_name']),
+      user_id:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}user_id']),
       training_date: dateTimeType
           .mapFromDatabaseResponse(data['${effectivePrefix}training_date']),
+      training_description: stringType.mapFromDatabaseResponse(
+          data['${effectivePrefix}training_description']),
     );
   }
   factory TrainingLocal.fromJson(Map<String, dynamic> json,
@@ -614,8 +618,10 @@ class TrainingLocal extends DataClass implements Insertable<TrainingLocal> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return TrainingLocal(
       training_id: serializer.fromJson<int>(json['training_id']),
-      training_name: serializer.fromJson<String>(json['training_name']),
+      user_id: serializer.fromJson<int>(json['user_id']),
       training_date: serializer.fromJson<DateTime>(json['training_date']),
+      training_description:
+          serializer.fromJson<String>(json['training_description']),
     );
   }
   @override
@@ -623,8 +629,9 @@ class TrainingLocal extends DataClass implements Insertable<TrainingLocal> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'training_id': serializer.toJson<int>(training_id),
-      'training_name': serializer.toJson<String>(training_name),
+      'user_id': serializer.toJson<int>(user_id),
       'training_date': serializer.toJson<DateTime>(training_date),
+      'training_description': serializer.toJson<String>(training_description),
     };
   }
 
@@ -634,68 +641,85 @@ class TrainingLocal extends DataClass implements Insertable<TrainingLocal> {
       training_id: training_id == null && nullToAbsent
           ? const Value.absent()
           : Value(training_id),
-      training_name: training_name == null && nullToAbsent
+      user_id: user_id == null && nullToAbsent
           ? const Value.absent()
-          : Value(training_name),
+          : Value(user_id),
       training_date: training_date == null && nullToAbsent
           ? const Value.absent()
           : Value(training_date),
+      training_description: training_description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(training_description),
     );
   }
 
   TrainingLocal copyWith(
-          {int training_id, String training_name, DateTime training_date}) =>
+          {int training_id,
+          int user_id,
+          DateTime training_date,
+          String training_description}) =>
       TrainingLocal(
         training_id: training_id ?? this.training_id,
-        training_name: training_name ?? this.training_name,
+        user_id: user_id ?? this.user_id,
         training_date: training_date ?? this.training_date,
+        training_description: training_description ?? this.training_description,
       );
   @override
   String toString() {
     return (StringBuffer('TrainingLocal(')
           ..write('training_id: $training_id, ')
-          ..write('training_name: $training_name, ')
-          ..write('training_date: $training_date')
+          ..write('user_id: $user_id, ')
+          ..write('training_date: $training_date, ')
+          ..write('training_description: $training_description')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(training_id.hashCode,
-      $mrjc(training_name.hashCode, training_date.hashCode)));
+  int get hashCode => $mrjf($mrjc(
+      training_id.hashCode,
+      $mrjc(user_id.hashCode,
+          $mrjc(training_date.hashCode, training_description.hashCode))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is TrainingLocal &&
           other.training_id == this.training_id &&
-          other.training_name == this.training_name &&
-          other.training_date == this.training_date);
+          other.user_id == this.user_id &&
+          other.training_date == this.training_date &&
+          other.training_description == this.training_description);
 }
 
 class TrainingLocalsCompanion extends UpdateCompanion<TrainingLocal> {
   final Value<int> training_id;
-  final Value<String> training_name;
+  final Value<int> user_id;
   final Value<DateTime> training_date;
+  final Value<String> training_description;
   const TrainingLocalsCompanion({
     this.training_id = const Value.absent(),
-    this.training_name = const Value.absent(),
+    this.user_id = const Value.absent(),
     this.training_date = const Value.absent(),
+    this.training_description = const Value.absent(),
   });
   TrainingLocalsCompanion.insert({
     @required int training_id,
-    @required String training_name,
+    @required int user_id,
     @required DateTime training_date,
+    @required String training_description,
   })  : training_id = Value(training_id),
-        training_name = Value(training_name),
-        training_date = Value(training_date);
+        user_id = Value(user_id),
+        training_date = Value(training_date),
+        training_description = Value(training_description);
   TrainingLocalsCompanion copyWith(
       {Value<int> training_id,
-      Value<String> training_name,
-      Value<DateTime> training_date}) {
+      Value<int> user_id,
+      Value<DateTime> training_date,
+      Value<String> training_description}) {
     return TrainingLocalsCompanion(
       training_id: training_id ?? this.training_id,
-      training_name: training_name ?? this.training_name,
+      user_id: user_id ?? this.user_id,
       training_date: training_date ?? this.training_date,
+      training_description: training_description ?? this.training_description,
     );
   }
 }
@@ -718,15 +742,13 @@ class $TrainingLocalsTable extends TrainingLocals
     );
   }
 
-  final VerificationMeta _training_nameMeta =
-      const VerificationMeta('training_name');
-  GeneratedTextColumn _training_name;
+  final VerificationMeta _user_idMeta = const VerificationMeta('user_id');
+  GeneratedIntColumn _user_id;
   @override
-  GeneratedTextColumn get training_name =>
-      _training_name ??= _constructTrainingName();
-  GeneratedTextColumn _constructTrainingName() {
-    return GeneratedTextColumn(
-      'training_name',
+  GeneratedIntColumn get user_id => _user_id ??= _constructUserId();
+  GeneratedIntColumn _constructUserId() {
+    return GeneratedIntColumn(
+      'user_id',
       $tableName,
       false,
     );
@@ -746,9 +768,23 @@ class $TrainingLocalsTable extends TrainingLocals
     );
   }
 
+  final VerificationMeta _training_descriptionMeta =
+      const VerificationMeta('training_description');
+  GeneratedTextColumn _training_description;
+  @override
+  GeneratedTextColumn get training_description =>
+      _training_description ??= _constructTrainingDescription();
+  GeneratedTextColumn _constructTrainingDescription() {
+    return GeneratedTextColumn(
+      'training_description',
+      $tableName,
+      false,
+    );
+  }
+
   @override
   List<GeneratedColumn> get $columns =>
-      [training_id, training_name, training_date];
+      [training_id, user_id, training_date, training_description];
   @override
   $TrainingLocalsTable get asDslTable => this;
   @override
@@ -765,13 +801,11 @@ class $TrainingLocalsTable extends TrainingLocals
     } else if (isInserting) {
       context.missing(_training_idMeta);
     }
-    if (d.training_name.present) {
-      context.handle(
-          _training_nameMeta,
-          training_name.isAcceptableValue(
-              d.training_name.value, _training_nameMeta));
+    if (d.user_id.present) {
+      context.handle(_user_idMeta,
+          user_id.isAcceptableValue(d.user_id.value, _user_idMeta));
     } else if (isInserting) {
-      context.missing(_training_nameMeta);
+      context.missing(_user_idMeta);
     }
     if (d.training_date.present) {
       context.handle(
@@ -780,6 +814,14 @@ class $TrainingLocalsTable extends TrainingLocals
               d.training_date.value, _training_dateMeta));
     } else if (isInserting) {
       context.missing(_training_dateMeta);
+    }
+    if (d.training_description.present) {
+      context.handle(
+          _training_descriptionMeta,
+          training_description.isAcceptableValue(
+              d.training_description.value, _training_descriptionMeta));
+    } else if (isInserting) {
+      context.missing(_training_descriptionMeta);
     }
     return context;
   }
@@ -798,13 +840,16 @@ class $TrainingLocalsTable extends TrainingLocals
     if (d.training_id.present) {
       map['training_id'] = Variable<int, IntType>(d.training_id.value);
     }
-    if (d.training_name.present) {
-      map['training_name'] =
-          Variable<String, StringType>(d.training_name.value);
+    if (d.user_id.present) {
+      map['user_id'] = Variable<int, IntType>(d.user_id.value);
     }
     if (d.training_date.present) {
       map['training_date'] =
           Variable<DateTime, DateTimeType>(d.training_date.value);
+    }
+    if (d.training_description.present) {
+      map['training_description'] =
+          Variable<String, StringType>(d.training_description.value);
     }
     return map;
   }

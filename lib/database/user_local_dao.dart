@@ -27,4 +27,5 @@ class UserLocalDao extends DatabaseAccessor<AppDatabase>
   Future insertUser(UserLocal data) => into(userLocals).insert(data);
   Future updateUser(UserLocal data) => update(userLocals).replace(data);
   Future deleteUser(UserLocal data) => delete(userLocals).delete(data);
+  Future deleteAll() => delete(userLocals).go();
 }

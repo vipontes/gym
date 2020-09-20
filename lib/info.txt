@@ -1,0 +1,11 @@
+## Tests
+To run tests: 'flutter test' on terminal
+
+## Run in release mode
+flutter run --release -d 'Moto G 5 Plus'
+
+
+## MOOR:
+flutter packages pub run build_runner build
+flutter packages pub run build_runner clean && flutter packages pub run build_runner build --delete-conflicting-outputs
+

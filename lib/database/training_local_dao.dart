@@ -6,8 +6,9 @@ part 'training_local_dao.g.dart';
 
 class TrainingLocals extends Table {
   IntColumn get training_id => integer()();
-  TextColumn get training_name => text()();
+  IntColumn get user_id => integer()();
   DateTimeColumn get training_date => dateTime()();
+  TextColumn get training_description => text()();
 
   @override
   Set<Column> get primaryKey => {training_id};
@@ -27,4 +28,5 @@ class TrainingLocalDao extends DatabaseAccessor<AppDatabase>
       update(trainingLocals).replace(data);
   Future deleteTraining(TrainingLocal data) =>
       delete(trainingLocals).delete(data);
+  Future deleteAll() => delete(trainingLocals).go();
 }

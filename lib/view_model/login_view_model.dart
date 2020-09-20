@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gym/api/LoginService.dart';
 import 'package:gym/api/error_handler/error_handler.dart';
+import 'package:gym/api/login_service.dart';
+import 'package:gym/database/app_database.dart';
+import 'package:gym/enums/view_state.dart';
 import 'package:gym/gym_app.dart';
 import 'package:gym/model/token.dart';
 import 'package:gym/util/connectivity_helper.dart';
 import 'package:gym/util/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:gym/enums/view_state.dart';
-
-import 'package:gym/database/app_database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginViewModel extends ChangeNotifier {
@@ -48,7 +47,10 @@ class LoginViewModel extends ChangeNotifier {
         _viewStateController.add(ViewState.loaded);
       } else if (decodedResponse is ErrorHandler) {
         final ErrorHandler e = decodedResponse;
-        _errorMessage.add(e.message);
+        if (e.message != null)
+          _errorMessage.add(e.message);
+        else
+          _errorMessage.add("internal_error");
         _viewStateController.add(ViewState.error);
         return false;
       }
@@ -68,6 +70,8 @@ class LoginViewModel extends ChangeNotifier {
 
       final prefs = await SharedPreferences.getInstance();
       prefs.setBool(Constants.isLoggedIn, true);
+      prefs.setString(Constants.token, _token.token);
+      prefs.setString(Constants.refreshToken, _token.refreshToken);
     }
   }
 
