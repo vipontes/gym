@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gym/database/app_database.dart';
-import 'package:gym/res/app_colors.dart';
+import 'package:gym/res/app_theme.dart';
 import 'package:gym/routes/routes.dart';
 import 'package:gym/util/localizations.dart';
 import 'package:provider/provider.dart';
@@ -30,11 +30,7 @@ class _GymAppState extends State<GymApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'GYM',
-        theme: ThemeData(
-          primarySwatch: AppColors.colorCustom,
-          cursorColor: AppColors.colorCustom,
-          accentColor: AppColors.primary,
-        ),
+        theme: AppTheme.lightTheme,
         supportedLocales: [
           Locale('en', 'US'),
           Locale('pt', 'BR'),

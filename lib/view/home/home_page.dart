@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gym/res/app_colors.dart';
-import 'package:gym/res/app_textstyles.dart';
+import 'package:gym/res/app_theme.dart';
 import 'package:gym/routes/routes.dart';
 import 'package:gym/view_model/home_view_model.dart';
 
@@ -21,7 +20,6 @@ class _HomePageState extends State<HomePage> {
         IconButton(
           icon: Icon(
             Icons.exit_to_app,
-            color: Colors.white,
           ),
           onPressed: () {
             _viewModel.logout();
@@ -38,13 +36,23 @@ class _HomePageState extends State<HomePage> {
               childAspectRatio: 1,
             ),
             itemBuilder: (contxt, indx) {
-              return Card(
-                margin: EdgeInsets.all(10.0),
-                color: AppColors.lightGray,
+              return Container(
+                margin: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(-5.0, 5.0),
+                      color: AppTheme.grey.withOpacity(.3),
+                      blurRadius: 10.0,
+                    )
+                  ],
+                ),
                 child: Center(
                   child: Text(
                     listTitle[indx],
-                    style: AppTextStyles.bigTextPrimary,
+                    style: AppTheme.headline,
                   ),
                 ),
               );
@@ -55,7 +63,6 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: Icon(Icons.add),
-        backgroundColor: AppColors.primary,
       ),
     );
   }
